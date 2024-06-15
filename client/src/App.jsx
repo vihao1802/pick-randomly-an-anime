@@ -104,7 +104,7 @@ function App() {
                   <div className="transition-all duration-300 ease-linear w-[50%] h-1 bg-green-500 group-hover:w-full"></div>
                 </Typography>
                 <div className=" overflow-hidden flex-grow pb-4">
-                  <div className="mt-2 flex flex-row flex-wrap gap-5 h-full overflow-y-scroll mr-[-20px]">
+                  <div className="mt-2 flex flex-row flex-wrap gap-5 h-full overflow-y-scroll mr-[-17px]">
                     <div className="flex flex-row md:flex-col gap-2 md:gap-1 justify-between">
                       <span className="text-gray-600">English</span>
                       <span className="text-white">
