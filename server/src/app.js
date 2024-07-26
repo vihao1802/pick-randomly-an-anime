@@ -3,6 +3,7 @@ import { rateLimit } from "express-rate-limit";
 import * as dotenv from "dotenv";
 import animes_routes from "./routes/animes.js";
 import cors from "cors";
+import connectToDB from "./database/connectDB.js";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(json());
 app.use(limiter);
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.SERVER_LOCAL_PORT || 5000;
 
 app.get("/", async (req, res) => {
   res.json({
@@ -29,9 +30,10 @@ app.get("/", async (req, res) => {
 app.use("/api/v1/animes", animes_routes);
 
 try {
-  app.listen(PORT, () =>
-    console.log(`Server is running on http://localhost:${PORT}`)
-  );
+  app.listen(PORT, async () => {
+    await connectToDB();
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 } catch (err) {
   console.log(err);
 }
