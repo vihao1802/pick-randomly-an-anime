@@ -1,0 +1,45 @@
+services:
+  client:
+    build:
+      context: ./
+      target: client-dev
+    container_name: anime-client
+    ports:
+      - "5174:5173"
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  server:
+    depends_on:
+      - mysqldb
+    build:
+      context: ./
+      target: server-dev
+    container_name: anime-server
+    restart: always
+    env_file: ./server/.env
+    ports:
+      - "8080:8080"
+
+  mysqldb:
+    image: mysql:5.7
+    container_name: anime-mysqldb
+    restart: always
+    env_file: ./server/.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=anime_db
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_mysql:/var/lib/mysql
+
+volumes:
+  db_mysql:
