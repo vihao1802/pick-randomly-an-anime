@@ -88,16 +88,16 @@ const ModalAnimeDetail = ({ anime, handleClose, open }) => {
             display: "flex",
             alignItems: "center",
           }}
-          className="h-screen md:h-[400px] px-[25px] md:px-[35px] py-[30px] overflow-auto md:overflow-hidden"
+          className="h-screen md:h-[400px] px-[25px] md:px-[35px] py-[40px] md:py-[30px] overflow-auto md:overflow-hidden"
         >
           <div className="w-full h-full flex flex-col md:flex-row gap-6">
             <div
-              className="absolute top-2 right-6 text-right text-white font-bold cursor-pointer hover:text-green-500"
+              className="absolute top-2 right-6 text-right text-white font-bold cursor-pointer hover:text-green-500 z-10"
               onClick={handleClose}
             >
               <CloseIcon />
             </div>
-            <div className="absolute top-2 right-16 text-right text-white font-bold cursor-pointer hover:text-green-500">
+            <div className="absolute top-2 right-16 text-right text-white font-bold cursor-pointer hover:text-green-500 z-10">
               {isSaved ? (
                 <div onClick={unSaveAnime}>
                   <BookmarkIcon />
