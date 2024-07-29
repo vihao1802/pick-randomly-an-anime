@@ -88,26 +88,29 @@ const ModalAnimeDetail = ({ anime, handleClose, open }) => {
             display: "flex",
             alignItems: "center",
           }}
-          className="h-screen md:h-[400px] px-[25px] md:px-[35px] py-[40px] md:py-[30px] overflow-auto md:overflow-hidden"
+          className="h-screen md:h-[400px] px-[25px] md:px-[35px] py-[30px] overflow-auto md:overflow-hidden"
         >
           <div className="w-full h-full flex flex-col md:flex-row gap-6">
-            <div
-              className="absolute top-2 right-6 text-right text-white font-bold cursor-pointer hover:text-green-500 z-10"
-              onClick={handleClose}
-            >
-              <CloseIcon />
+            <div className="sm:absolute top-2 right-6 flex flex-row gap-2 justify-end">
+              <div className="text-white font-bold cursor-pointer hover:text-green-500 z-10">
+                {isSaved ? (
+                  <div onClick={unSaveAnime}>
+                    <BookmarkIcon />
+                  </div>
+                ) : (
+                  <div onClick={saveAnime}>
+                    <BookmarkBorderIcon />
+                  </div>
+                )}
+              </div>
+              <div
+                className="text-white font-bold cursor-pointer hover:text-green-500 z-10"
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </div>
             </div>
-            <div className="absolute top-2 right-16 text-right text-white font-bold cursor-pointer hover:text-green-500 z-10">
-              {isSaved ? (
-                <div onClick={unSaveAnime}>
-                  <BookmarkIcon />
-                </div>
-              ) : (
-                <div onClick={saveAnime}>
-                  <BookmarkBorderIcon />
-                </div>
-              )}
-            </div>
+
             <a
               href={anime.url}
               target="_blank"
