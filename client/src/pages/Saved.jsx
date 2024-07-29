@@ -37,10 +37,14 @@ const Saved = () => {
   }, []);
 
   if (loading || !animes)
-    return <div className="w-full flex justify-center">Loading...</div>;
+    return (
+      <div className="h-screen w-full flex justify-center items-center bg-black text-white text-xl">
+        Loading...
+      </div>
+    );
 
   return (
-    <div className={"relative w-full h-auto  bg-[#131313] p-2 sm:p-8 "}>
+    <div className={"relative w-full h-full bg-[#131313] px-2 py-12 sm:px-8"}>
       <h1 className="text-white text-2xl font-bold mx-auto max-w-[1300px]">
         Saved anime
       </h1>

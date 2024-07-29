@@ -3,11 +3,11 @@ import Typography from "@mui/material/Typography";
 
 const AnimeCard = ({ anime }) => {
   return (
-    <div className="w-full grid grid-cols-4  lg:grid-cols-3 gap-3 h-[300px] bg-white">
+    <div className="w-full grid grid-cols-5 sm:grid-cols-4  lg:grid-cols-3 gap-3 h-[300px] bg-white rounded-lg sm:rounded-none">
       <a
         href={anime.url}
         target="_blank"
-        className="h-full w-full basis-1/2 transition-all duration-400 ease-linear hover:opacity-80 col-span-1"
+        className="h-full w-full basis-1/2 transition-all duration-400 ease-linear hover:opacity-80 col-span-2 sm:col-span-1"
       >
         <img src={anime.image} alt="Test" className="h-[300px]" />
       </a>
