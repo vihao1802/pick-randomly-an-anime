@@ -1,5 +1,4 @@
-import sequelize from "../config/db.config.js";
-import { DataTypes } from "sequelize";
+import mongoose from "mongoose";
 
 /* 
 {
@@ -31,37 +30,37 @@ import { DataTypes } from "sequelize";
         "Favorites": "44,184"
     }, */
 
-const anime = sequelize.define("Anime", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  url: DataTypes.STRING,
-  title: DataTypes.STRING,
-  image: DataTypes.STRING,
-  Synonyms: DataTypes.STRING,
-  Japanese: DataTypes.STRING,
-  English: DataTypes.STRING,
-  Type: DataTypes.STRING,
-  Episodes: DataTypes.STRING,
-  Status: DataTypes.STRING,
-  Aired: DataTypes.STRING,
-  Premiered: DataTypes.STRING,
-  Broadcast: DataTypes.STRING,
-  Producers: DataTypes.STRING,
-  Licensors: DataTypes.STRING,
-  Studios: DataTypes.STRING,
-  Source: DataTypes.STRING,
-  Genres: DataTypes.STRING,
-  Demographic: DataTypes.STRING,
-  Duration: DataTypes.STRING,
-  Rating: DataTypes.STRING,
-  Score: DataTypes.STRING,
-  Ranked: DataTypes.STRING,
-  Popularity: DataTypes.STRING,
-  Members: DataTypes.STRING,
-  Theme: {
-    type: DataTypes.STRING,
-    defaultValue: "",
+const animeSchema = new mongoose.Schema(
+  {
+    id: { type: Number, unique: true, required: true }, // ID kiểu integer
+    url: { type: String },
+    title: { type: String },
+    image: { type: String },
+    Synonyms: { type: String },
+    Japanese: { type: String },
+    English: { type: String },
+    Type: { type: String },
+    Episodes: { type: String },
+    Status: { type: String },
+    Aired: { type: String },
+    Premiered: { type: String },
+    Broadcast: { type: String },
+    Producers: { type: String },
+    Licensors: { type: String },
+    Studios: { type: String },
+    Source: { type: String },
+    Genres: { type: String },
+    Demographic: { type: String },
+    Duration: { type: String },
+    Rating: { type: String },
+    Score: { type: String },
+    Ranked: { type: String },
+    Popularity: { type: String },
+    Members: { type: String },
+    Theme: { type: String, default: "" },
+    Favorites: { type: String },
   },
-  Favorites: DataTypes.STRING,
-});
+  { timestamps: true }
+);
 
-export default anime;
+export default mongoose.model("Anime", animeSchema);
