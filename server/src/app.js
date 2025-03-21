@@ -3,7 +3,7 @@ import { rateLimit } from "express-rate-limit";
 import * as dotenv from "dotenv";
 import animes_routes from "./routes/animes.js";
 import cors from "cors";
-import connectToDB from "./database/connectDB.js";
+import connectToMongoDB from "./config/db.config.js";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ app.use("/api/v1/animes", animes_routes);
 
 try {
   app.listen(PORT, async () => {
-    await connectToDB();
+    await connectToMongoDB();
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 } catch (err) {

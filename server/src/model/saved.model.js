@@ -1,23 +1,14 @@
-import sequelize from "../config/db.config.js";
-import { DataTypes } from "sequelize";
-import anime from "./anime.model.js";
+import mongoose from "mongoose";
 
-const saved = sequelize.define("Saved", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  animeId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: anime,
-      key: "id",
+const savedSchema = new mongoose.Schema(
+  {
+    animeId: {
+      type: Number,
+      ref: "Anime",
+      required: true,
     },
   },
-});
+  { timestamps: true }
+);
 
-anime.hasMany(saved, { foreignKey: "animeId" });
-saved.belongsTo(anime, { foreignKey: "animeId" });
-
-export default saved;
+export default mongoose.model("Saved", savedSchema);
