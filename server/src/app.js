@@ -27,7 +27,7 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.use("/api/v1/animes", animes_routes);
+app.use("/animes", animes_routes);
 
 try {
   app.listen(PORT, async () => {

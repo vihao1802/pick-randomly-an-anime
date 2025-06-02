@@ -5,66 +5,41 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import toast from "react-hot-toast";
+import useSaveAnime from "../hooks/useSaveAnime";
+import useUnsaveAnime from "../hooks/useUnSaveAnime";
+import CachedIcon from "@mui/icons-material/Cached";
+import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 
-const ModalAnimeDetail = ({ anime, handleClose, open }) => {
+const ModalAnimeDetail = ({
+  anime,
+  handleClose,
+  open,
+  fetchOneAnime,
+  loadingPick,
+}) => {
   const [isSaved, setIsSaved] = useState(anime.isSaved);
+  const { saveAnime, loading: saving } = useSaveAnime();
+  const { unSaveAnime, loading: unsaving } = useUnsaveAnime();
+  const loading = saving || unsaving;
 
-  const saveAnime = async () => {
-    try {
-      console.log(
-        JSON.stringify({
-          id: anime.id,
-        })
-      );
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "/v1/animes/save",
-        {
-          method: "POST",
-          body: JSON.stringify(anime),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(res);
-      if (res.ok) {
-        console.log("Saved");
-        setIsSaved((prev) => !prev);
-        toast.success("Your anime is saved");
+  const handleToggleSave = async () => {
+    const { success } = isSaved
+      ? await unSaveAnime(anime.id)
+      : await saveAnime(anime);
+
+    if (success) {
+      setIsSaved((prev) => !prev);
+      if (!isSaved) {
+        toast.success(`Anime saved successfully`);
       } else {
-        console.log("Something went wrong");
+        toast("Anime unsaved successfully", {
+          icon: "🗑️",
+        });
       }
-    } catch (error) {
-      console.log("Error at " + error.message);
+    } else {
+      toast.error("Something went wrong");
     }
   };
-
-  const unSaveAnime = async () => {
-    try {
-      const res = await fetch(
-        import.meta.env.VITE_API_URL + "/v1/animes/unsaved",
-        {
-          method: "DELETE",
-          body: JSON.stringify({
-            id: anime.id,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (res.ok) {
-        console.log("Unsaved");
-        setIsSaved((prev) => !prev);
-        toast.success("Your anime is unsaved");
-      } else {
-        console.log("Something went wrong");
-      }
-    } catch (error) {
-      console.log("Error at " + error.message);
-    }
-  };
-
   return (
     <div>
       <Modal
@@ -90,22 +65,50 @@ const ModalAnimeDetail = ({ anime, handleClose, open }) => {
           }}
           className="h-screen md:h-[400px] px-[25px] md:px-[35px] py-[30px] overflow-auto md:overflow-hidden"
         >
-          <div className="w-full h-full flex flex-col md:flex-row gap-6">
+          <div className="w-full h-full flex justify-content-center items-center flex-col md:flex-row gap-6">
             <div className="sm:absolute top-2 right-6 flex flex-row gap-2 justify-end">
-              <div className="text-white font-bold cursor-pointer hover:text-green-500 z-10">
-                {isSaved ? (
-                  <div onClick={unSaveAnime}>
-                    <BookmarkIcon />
+              <div
+                className={`text-white font-bold cursor-pointer z-10 h-[24px] ${
+                  loadingPick
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:text-green-500"
+                }`}
+                onClick={!loadingPick ? fetchOneAnime : undefined}
+                title="Pick another anime"
+              >
+                {loadingPick ? (
+                  <div className="animate-spin">
+                    <CachedIcon />
                   </div>
                 ) : (
-                  <div onClick={saveAnime}>
-                    <BookmarkBorderIcon />
-                  </div>
+                  <HelpCenterOutlinedIcon />
                 )}
               </div>
+
+              <div
+                className={`text-white font-bold cursor-pointer z-10 ${
+                  loading
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:text-green-500"
+                }`}
+                onClick={!loading ? handleToggleSave : undefined}
+                title="Save or unsave anime"
+              >
+                {loading ? (
+                  <div className="animate-spin">
+                    <CachedIcon />
+                  </div>
+                ) : isSaved ? (
+                  <BookmarkIcon />
+                ) : (
+                  <BookmarkBorderIcon />
+                )}
+              </div>
+
               <div
                 className="text-white font-bold cursor-pointer hover:text-green-500 z-10"
                 onClick={handleClose}
+                title="Close"
               >
                 <CloseIcon />
               </div>
