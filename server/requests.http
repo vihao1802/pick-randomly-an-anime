@@ -1,0 +1,14 @@
+@hostname= http://localhost:8080/animes
+
+# autocomplete
+get {{hostname}}/search?keyword=sousou&type=prefix HTTP/1.1
+
+###
+# full-text search
+get {{hostname}}/search?keyword=one&type=text HTTP/1.1
+content-type: application/json
+
+###
+
+get {{hostname}}/get-one-random-anime HTTP/1.1
+content-type: application/json

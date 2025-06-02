@@ -1,4 +1,3 @@
-import ReorderIcon from "@mui/icons-material/Reorder";
 import {
   Box,
   Drawer,
@@ -8,8 +7,10 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import ReorderIcon from "@mui/icons-material/Reorder";
 import HomeIcon from "@mui/icons-material/Home";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -43,6 +44,20 @@ const SideBar = () => {
                     <HomeIcon className="text-white group-hover:text-green-500" />
                   </ListItemIcon>
                   <ListItemText primary={"Home"} />
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
+            <NavLink className="navbar-item" to="/search">
+              <ListItem
+                key={"Search"}
+                disablePadding
+                className="text-white hover:text-green-500 group"
+              >
+                <ListItemButton>
+                  <ListItemIcon>
+                    <SearchIcon className="text-white group-hover:text-green-500" />
+                  </ListItemIcon>
+                  <ListItemText primary={"Search"} />
                 </ListItemButton>
               </ListItem>
             </NavLink>

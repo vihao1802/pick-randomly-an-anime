@@ -1,49 +1,31 @@
 import { useState } from "react";
 
 import ModalAnimeDetail from "../components/ModalAnimeDetail";
+import useGetOneRandomAnime from "../hooks/useGetOneRandomAnime";
 
-function Home() {
+const Home = () => {
   const [open, setOpen] = useState(false);
-  const [anime, setAnime] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {
+    data: anime,
+    setData: setAnime,
+    loading,
+    fetchData,
+  } = useGetOneRandomAnime();
 
   const handleClose = () => {
     setOpen(false);
     setAnime(null);
   };
   const handleOpen = () => {
+    handleClose();
     setOpen(true);
     fetchData();
-  };
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/v1/animes/get-one-random-anime`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (res.ok) {
-        const data = await res.json();
-        setAnime(data);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
     <div
       className={
-        "relative w-full h-screen flex flex-col justify-center items-center gap-4 bg-[#131313] p-2 sm:p-4 "
+        "flex-grow relative w-full h-full flex flex-col justify-center items-center gap-4 p-2 sm:p-4 "
       }
     >
       <div className="bg-white w-full max-w-[650px] aspect-video rounded-2xl">
@@ -57,6 +39,8 @@ function Home() {
             open={open}
             handleClose={handleClose}
             anime={anime}
+            fetchOneAnime={fetchData}
+            loadingPick={loading}
           />
         )}
       </div>
@@ -74,6 +58,6 @@ function Home() {
       </button>
     </div>
   );
-}
+};
 
 export default Home;

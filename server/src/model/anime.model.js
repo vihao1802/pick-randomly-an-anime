@@ -63,4 +63,10 @@ const animeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// ✅ Index thường (B-Tree) → hỗ trợ tìm prefix (autocomplete)
+animeSchema.index({ title: 1 });
+
+// ✅ Text index → hỗ trợ full-text search trên nhiều trường
+animeSchema.index({ title: "text", description: "text" }); // description: đảm bảo chỉ được 1 text index cho mỗi collection vì có thể có các trường khác có tên là title ở các collection khác
+
 export default mongoose.model("Anime", animeSchema);
